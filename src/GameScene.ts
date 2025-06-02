@@ -223,7 +223,7 @@ export class GameScene extends Phaser.Scene {
           this.tweens.add({
             targets: text,
             alpha: 0,
-            duration: 300,
+            duration: 400,
             ease: "Cubic.easeOut",
           });
         }
@@ -248,7 +248,10 @@ export class GameScene extends Phaser.Scene {
           const moves = applyTumble(this.board);
 
           // Inject into cells that were filled during tumble
-          const newSymbols = moves.map((m) => ({ row: m.toRow, col: m.col }));
+          const newSymbols = moves
+            .filter((m) => m.fromRow === -1)
+            .map((m) => ({ row: m.toRow, col: m.col }));
+
           injectMultipliersIntoBoard(this.board, newSymbols);
 
           this.updateBoardDisplay();
@@ -357,7 +360,7 @@ export class GameScene extends Phaser.Scene {
       this.tweens.add({
         targets: text,
         y: endY,
-        duration: 300,
+        duration: 500,
         ease: "Bounce.Out",
       });
     }
@@ -403,7 +406,7 @@ export class GameScene extends Phaser.Scene {
     this.tweens.add({
       targets: this.winTierText,
       scale: 1.2,
-      duration: 300,
+      duration: 500,
       ease: "Back.Out",
       yoyo: true,
     });
@@ -427,7 +430,7 @@ export class GameScene extends Phaser.Scene {
           this.tweens.add({
             targets: [this.winTierText, this.winTierTextBackground],
             alpha: 0,
-            duration: 800,
+            duration: 1000,
             delay: 500,
           });
         }
@@ -500,7 +503,7 @@ export class GameScene extends Phaser.Scene {
         this.tweens.add({
           targets: text,
           y: targetY,
-          duration: 400,
+          duration: 500,
           delay: col * 40,
           ease: "Bounce.Out",
         });

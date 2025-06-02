@@ -33,9 +33,14 @@ export function injectMultipliersIntoBoard(
   const multipliers: Multiplier[] = [];
   const chance = Math.random();
 
-  if (chance > 0.15) return multipliers;
+  if (chance > 0.15) return multipliers; 
 
-  const candidates = eligiblePositions ?? getAllPositions(board);
+  // ✅ Filter to only empty and non-multiplier cells
+  const candidates = (eligiblePositions ?? getAllPositions(board)).filter(
+    ({ row, col }) =>
+      board[row][col] !== "" && !isMultiplierString(board[row][col])
+  );
+
   if (candidates.length === 0) return multipliers;
 
   const count = Phaser.Math.Between(1, Math.min(2, candidates.length));
