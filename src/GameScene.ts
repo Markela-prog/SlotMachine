@@ -247,7 +247,9 @@ export class GameScene extends Phaser.Scene {
         this.time.delayedCall(400, () => {
           const moves = applyTumble(this.board);
 
-          injectMultipliersIntoBoard(this.board);
+          // Inject into cells that were filled during tumble
+          const newSymbols = moves.map((m) => ({ row: m.toRow, col: m.col }));
+          injectMultipliersIntoBoard(this.board, newSymbols);
 
           this.updateBoardDisplay();
           this.animateTumble(moves);
